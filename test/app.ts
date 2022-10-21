@@ -2,8 +2,10 @@ import { it, expect } from "vitest";
 import { Message, update, generateDefaultState } from "../js/app";
 
 // in-source test suites
-it("canAddTodo", () => {
+it("canAddTodos", () => {
+    // When we add one todo
 	let state = update(generateDefaultState(), Message.AddTodo, { todoTitle: "first todo" });
+
 	expect(state).toEqual({
 		todos: [
 			{
@@ -15,6 +17,7 @@ it("canAddTodo", () => {
 		idLedger: 2,
 		page: "all",
 	});
+    // when we add another todo
 	state = update(state, Message.AddTodo, { todoTitle: "second todo" });
 	expect(state).toEqual({
 		todos: [
@@ -35,8 +38,11 @@ it("canAddTodo", () => {
 });
 
 it("canCompleteATodo", () => {
+    // given we have two todos
 	let state = update(generateDefaultState(), Message.AddTodo, { todoTitle: "first todo" });
 	state = update(state, Message.AddTodo, { todoTitle: "second todo" });
+
+    // when we toggle toggle the first one complete
 	state = update(state, Message.ToggleCompleteTodo, { todoID: 1 });
 	expect(state).toEqual({
 		todos: [
@@ -57,8 +63,11 @@ it("canCompleteATodo", () => {
 });
 
 it("canCompleteATodo", () => {
+    // give we have two todos 
 	let state = update(generateDefaultState(), Message.AddTodo, { todoTitle: "first todo" });
 	state = update(state, Message.AddTodo, { todoTitle: "second todo" });
+
+    // when we update the second todo
 	state = update(state, Message.UpdateTodo, { todoTitle: "updated second todo", todoID:2 });
 	expect(state).toEqual({
 		todos: [
@@ -124,8 +133,6 @@ it("canRemoveTodos", () => {
     // When we remove the even todos
 	state = update(state, Message.RemoveTodo, { todoID: 2 });
 	state = update(state, Message.RemoveTodo, { todoID: 4 });
-
-    
 
     // then we should have three todos, with a idLedger of 6
 	expect(state).toEqual({
