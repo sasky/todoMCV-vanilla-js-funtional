@@ -141,15 +141,6 @@ export function render(state: State, domElements: DOMElements): void {
 	//
 	//attach event handlers to dynamic html
 }
-interface Dispatch {
-        message:Message; 
-        payload:Payload;
-}
-function dispatch(message: Message, payload: Payload ){
-
-    const updateEvent = new CustomEvent<Dispatch>('dispatch', {detail:{ message: message, payload: payload }});
-    document.dispatchEvent(updateEvent);
-} 
 
 export function init(el: HTMLElement): void {
 	// build the dom elements needed for dom manipulation of pre rendered html
@@ -163,29 +154,16 @@ export function init(el: HTMLElement): void {
 		count: el.querySelector('[data-todo="count"]') as HTMLElement,
 		filterLinks: el.querySelectorAll(`[data-todo="filters"] a`) as NodeListOf<HTMLElement>,
 	};
-    	// get the page state
-    //
-
-	let state = generateDefaultState();
-    //  CustomEvent for updating the state
-
-    document.addEventListener('dispatch',((event: CustomEvent<Dispatch>)  => {
-        const message = event.detail.message as Message;
-        const payload = event.detail.payload as Payload;
-        state = update(state, message, payload);
-        console.log('state Listener' ,state);
-    }) as EventListener);
+	// get the page state
+	//
 
 
-    
-    
 	// set up the event listeners on the pre rended state
 	domElements.input.addEventListener("keyup", (e: KeyboardEvent) => {
-        const value = (e.target as HTMLInputElement).value; 
+		const value = (e.target as HTMLInputElement).value;
 		if (e.key === "Enter" && value.length) {
-            dispatch(Message.AddTodo, { todoTitle: value })
-            console.log('value' ,value);
-            domElements.input.value = '';
+			dispatch(Message.AddTodo, { todoTitle: value });
+			domElements.input.value = "";
 		}
 	});
 
@@ -195,5 +173,3 @@ export function init(el: HTMLElement): void {
 	render(state, domElements);
 	// set up global update event
 }
-init(document.body);
-

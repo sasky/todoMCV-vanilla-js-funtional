@@ -1,7 +1,8 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  test: {
-    include: ['test/**/*.{js,ts}'],
-  },
-})
+	test: {
+		// environment: "happy-dom",
+		include: ["index.html","test/**/*.{js,ts}"],
+	},
+});

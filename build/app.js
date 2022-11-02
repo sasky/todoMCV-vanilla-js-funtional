@@ -94,7 +94,9 @@ export function render(state, domElements) {
     });
 }
 function dispatch(message, payload) {
-    const updateEvent = new CustomEvent('dispatch', { detail: { message: message, payload: payload } });
+    const updateEvent = new CustomEvent("dispatch", {
+        detail: { message: message, payload: payload },
+    });
     document.dispatchEvent(updateEvent);
 }
 export function init(el) {
@@ -109,18 +111,18 @@ export function init(el) {
         filterLinks: el.querySelectorAll(`[data-todo="filters"] a`),
     };
     let state = generateDefaultState();
-    document.addEventListener('dispatch', ((event) => {
+    document.addEventListener("dispatch", ((event) => {
         const message = event.detail.message;
         const payload = event.detail.payload;
         state = update(state, message, payload);
-        console.log('state Listener', state);
+        console.log("state Listener", state);
+        render(state, domElements);
     }));
     domElements.input.addEventListener("keyup", (e) => {
         const value = e.target.value;
         if (e.key === "Enter" && value.length) {
             dispatch(Message.AddTodo, { todoTitle: value });
-            console.log('value', value);
-            domElements.input.value = '';
+            domElements.input.value = "";
         }
     });
     render(state, domElements);
