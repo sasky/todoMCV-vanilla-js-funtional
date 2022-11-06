@@ -1,3 +1,4 @@
+
 export const getURLHash = () => (document.location.hash as string).replace(/^#\//, "");
 
 export const delegate = (

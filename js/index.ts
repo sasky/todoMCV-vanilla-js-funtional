@@ -9,10 +9,23 @@ interface Module {
     view: any;
 }
 
+
 const engine = {
     config: {
         rootEl: document.body,
-    }
+        localStorageKey: 'todoMVCFunctional'
+    },
+    store: (state = []):State  => {
+        if(state.length) {
+
+		window.localStorage.setItem(engine.config.localStorageKey, JSON.stringify(state));
+
+        }
+
+		return JSON.parse(window.localStorage.getItem(engine.config.localStorageKey) as State;
+
+    },
+    router: () => {},
 	dispatch: (message, payload) => {
 		const updateEvent = new CustomEvent<Dispatch>("dispatch", {
 			detail: { message: message, payload: payload },

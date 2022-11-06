@@ -53,6 +53,7 @@ export function generateDefaultState(): State {
 }
 
 export function update(state: State, message: Message, payload: Payload): State {
+    
 	const id = payload?.todoID ?? 0;
 	const title = payload?.todoTitle ?? "";
 	const page = payload?.page ?? "";
