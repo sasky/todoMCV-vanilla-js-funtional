@@ -1,5 +1,6 @@
+
 export class Action {
-  	#message = ""
+	#message = ""
 	#payloadTypes = []
 	#reducer = (state) => state
     constructor(message, payloadTypes, reducer) {
@@ -13,13 +14,13 @@ export class Action {
 }
 
 let actions = [];
-export const Actions = {
-	addAction: (action) => {
+export class Actions  {
+	static addAction = (action) => {
 		if (action instanceof Action) {
 			actions.push(action);
 		} else {
 			throw new Error("action must be a instance of an Action");
 		}
-	},
-	getActions: () => actions,
+	}
+	static getActions = () => actions
 };
